@@ -4,31 +4,31 @@
         <Table> 
             <div class="calc">
                 <div class="calc-screen">
-                    <p>0</p>
+                    <p>{{inputValue}}</p>
                 </div>
                 <div class="buttons">
-                    <div class="btn ac bg-grey">ac</div>
-                    <div class="btn percent bg-grey">%</div>
+                    <div @click="ac" class="btn ac bg-grey">ac</div>
+                    <div @click="operation('%')" class="btn percent bg-grey">%</div>
                     <div class="btn plus-minus bg-grey">+/-</div>
                     <div class="btn division bg-orange">/</div>
                     
-                    <div class="btn seven">7</div>
-                    <div class="btn eight">8</div>
-                    <div class="btn nine">9</div>
+                    <div @click="addDigit('7')" class="btn seven">7</div>
+                    <div @click="addDigit('8')" class="btn eight">8</div>
+                    <div @click="addDigit('9')" class="btn nine">9</div>
                     <div class="btn multiply bg-orange">*</div>
                     
-                    <div class="btn four">4</div>
-                    <div class="btn five">5</div>
-                    <div class="btn six">6</div>
+                    <div @click="addDigit('4')" class="btn four">4</div>
+                    <div @click="addDigit('5')" class="btn five">5</div>
+                    <div @click="addDigit('6')" class="btn six">6</div>
                     <div class="btn minus bg-orange">-</div>
                     
-                    <div class="btn one">1</div>
-                    <div class="btn two">2</div>
-                    <div class="btn three">3 </div>
-                    <div class="btn plus bg-orange">+</div>
+                    <div @click="addDigit('1')" class="btn one">1</div>
+                    <div @click="addDigit('2')" class="btn two">2</div>
+                    <div @click="addDigit('3')" class="btn three">3 </div>
+                    <div @click="operation('+')" class="btn plus bg-orange">+</div>
                     
-                    <div class="btn zero">0</div>
-                    <div class="btn dot">.</div>
+                    <div @click="addDigit('0')" class="btn zero">0</div>
+                    <div @click="addDigit('.')" class="btn dot">.</div>
                     <div class="btn eqal bg-orange">=</div>
                     
                 </div>
@@ -37,9 +37,106 @@
     </div>
 </template>
 <script>
-export default {
+export default 
+{
+    name : 'MyCalculator',
+    data()
+    {
+        return{
+        inputValue : '0',
+        firstDigit : "",
+        secondDigit : "",
+        currentOperation : "",
+        operationResult : "0",
+        }
+    },
+    methods: 
+    {
+        addDigit(val) {
+        
+            if  (this.operationResult !== "0")
+                {
+                    this.inputValue="0";
+                    this.operationResult="0";
+                }    
+            if (this.inputValue === "0") 
+            {   if (val===".")
+            {
+                this.inputValue = "0.";
+            } 
+                else 
+            {
+                    this.inputValue = val
+            }
+              
+        }
+         else 
+        {
+            this.inputValue=this.inputValue+val;
+        }   
+        },
+        
+        ac() 
+        {
+            this.firstDigit = "";
+            this.secondDigit = "";
+            this.inputValue ="0";
+            this.currentOperation = "";
+            this.operationResult = "0"
+        },
+        operation(val) 
+        {   //alert(val);
+            if (this.firstDigit==="") 
+            {
+                this.firstDigit=this.inputValue;
+                this.inputValue="0"
+                this.currentOperation=val;
+                this.secondDigit = "";
+            }
+            else 
+            {  
+                if (this.secondDigit==="") 
+                {
+                    this.secondDigit =this.inputValue
+                
+                 if (this.currentOperation === "+")
+                { 
+                    this.inputValue = String(Number(this.firstDigit)+Number(this.secondDigit))
+                }
+                if (this.currentOperation === "-")
+                { 
+                    this.inputValue = String(Number(this.firstDigit)-Number(this.secondDigit))
+                }
+                if (this.currentOperation === "*")
+                { 
+                    this.inputValue = String(Number(this.firstDigit)*Number(this.secondDigit))
+                }
+                if (this.currentOperation === "/")
+                { 
+                    this.inputValue = String(Number(this.firstDigit)/Number(this.secondDigit))
+                }
+                if (this.currentOperation === "%")
+                { 
+                    this.inputValue = String(Number(this.firstDigit)/100*Number(this.secondDigit))
+                }
+            
+                this.firstDigit=this.inputValue;
+                this.operationResult=this.inputValue;
+                this.secondDigit = ""
+
+                this.currentOperation === val        
+                }
+            }
+        }
+        
+
+    },
+    }    
     
-}
+    
+
+    
+
 </script>
 <style>
     .calc {
