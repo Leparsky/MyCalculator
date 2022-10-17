@@ -10,7 +10,7 @@
                     <div @click="ac" class="btn ac bg-grey">ac</div>
                     <div @click="operation('%')" class="btn percent bg-grey">%</div>
                     <div @click="changеSign" class="btn plus-minus bg-grey">+/-</div>
-                    <div class="btn division bg-orange">/</div>
+                    <div @click="operation('/')" class="btn division bg-orange">/</div>
                     
                     <div @click="addDigit('7')" class="btn seven">7</div>
                     <div @click="addDigit('8')" class="btn eight">8</div>
