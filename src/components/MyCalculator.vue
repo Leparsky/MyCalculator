@@ -15,12 +15,12 @@
                     <div @click="addDigit('7')" class="btn seven">7</div>
                     <div @click="addDigit('8')" class="btn eight">8</div>
                     <div @click="addDigit('9')" class="btn nine">9</div>
-                    <div class="btn multiply bg-orange">*</div>
+                    <div @click="operation('*')" class="btn multiply bg-orange">*</div>
                     
                     <div @click="addDigit('4')" class="btn four">4</div>
                     <div @click="addDigit('5')" class="btn five">5</div>
                     <div @click="addDigit('6')" class="btn six">6</div>
-                    <div class="btn minus bg-orange">-</div>
+                    <div @click="operation('-')" class="btn minus bg-orange">-</div>
                     
                     <div @click="addDigit('1')" class="btn one">1</div>
                     <div @click="addDigit('2')" class="btn two">2</div>
@@ -29,7 +29,7 @@
                     
                     <div @click="addDigit('0')" class="btn zero">0</div>
                     <div @click="addDigit('.')" class="btn dot">.</div>
-                    <div class="btn eqal bg-orange">=</div>
+                    <div @click="operation('=')" class="btn eqal bg-orange">=</div>
                     
                 </div>
             </div>
@@ -86,7 +86,7 @@ export default
         },
         operation(val) 
         {   //alert(val);
-            if (this.firstDigit==="") 
+            if ((this.firstDigit==="")||(this.currentOperation === "="))
             {
                 this.firstDigit=this.inputValue;
                 this.inputValue="0"
@@ -100,7 +100,7 @@ export default
                     this.secondDigit =this.inputValue
                 
                  if (this.currentOperation === "+")
-                { 
+                {   
                     this.inputValue = String(Number(this.firstDigit)+Number(this.secondDigit))
                 }
                 if (this.currentOperation === "-")
@@ -119,12 +119,12 @@ export default
                 { 
                     this.inputValue = String(Number(this.firstDigit)/100*Number(this.secondDigit))
                 }
-            
+                console.log(this.secondDigit);
                 this.firstDigit=this.inputValue;
                 this.operationResult=this.inputValue;
                 this.secondDigit = ""
-
-                this.currentOperation === val        
+                this.currentOperation = val        
+                
                 }
             }
         }
