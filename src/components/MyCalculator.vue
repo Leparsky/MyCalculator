@@ -9,7 +9,7 @@
                 <div class="buttons">
                     <div @click="ac" class="btn ac bg-grey">ac</div>
                     <div @click="operation('%')" class="btn percent bg-grey">%</div>
-                    <div class="btn plus-minus bg-grey">+/-</div>
+                    <div @click="changеSign" class="btn plus-minus bg-grey">+/-</div>
                     <div class="btn division bg-orange">/</div>
                     
                     <div @click="addDigit('7')" class="btn seven">7</div>
@@ -127,7 +127,19 @@ export default
                 
                 }
             }
+        },
+        changеSign()
+        {
+            if (this.inputValue[0]==='-')
+            {
+                this.inputValue=this.inputValue.slice(1);
+            }
+            else 
+            {
+                this.inputValue="-"+this.inputValue;
+            }
         }
+
         
 
     },
